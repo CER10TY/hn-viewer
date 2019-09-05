@@ -1,0 +1,71 @@
+{
+	"name": "hnviewer",
+	"displayName": "HNViewer",
+	"description": "View HackerNews in VSCode",
+	"version": "0.0.1",
+	"publisher": "sjohanson",
+	"author": "Søren Johanson <contact@soeren.codes>",
+	"engines": {
+		"vscode": "^1.35.0"
+	},
+	"bugs": {
+		"url": "https://github.com/CER10TY/hn-viewer/issues",
+		"email": "contact@soeren.codes"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onCommand:extension.hackerNews"
+	],
+	"main": "./extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "extension.hackerNews",
+				"title": "Hacker News"
+			}
+		],
+		"configuration": {
+			"title": "Hacker News",
+			"properties": {
+				"hnviewer.title": {
+					"type": "string",
+					"default": "Hacker News",
+					"description": "Set the title of Hacker News window."
+				},
+				"hnviewer.requestTimeout": {
+					"type": "integer",
+					"default": 10000,
+					"minimum": 1000,
+					"maximum": 60000,
+					"description": "Set the timeout for requests in milliseconds (ms)."
+				},
+				"hnviewer.limitation": {
+					"type": "integer",
+					"minimum": 1,
+					"maximum": 100,
+					"default": 25,
+					"description": "Set the amount of items to be loaded on the front page."
+				}
+			}
+		}
+	},
+	"scripts": {
+		"test": "node ./test/runTest.js"
+	},
+	"devDependencies": {
+		"@types/glob": "^7.1.1",
+		"@types/mocha": "^5.2.6",
+		"@types/node": "^10.12.21",
+		"@types/vscode": "^1.38.0",
+		"eslint": "^5.13.0",
+		"glob": "^7.1.4",
+		"mocha": "^6.1.4",
+		"typescript": "^3.3.1",
+		"vscode-test": "^1.0.2"
+	},
+	"dependencies": {
+		"axios": "^0.19.0"
+	}
+}
