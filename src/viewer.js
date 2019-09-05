@@ -8,7 +8,12 @@ let stylesheetPath;
 function createFrontView() {
     return new Promise((resolve, reject) => {
         api.getTrending().then(response => {
-            
+            let html = templates.head();
+            for(let item in response) {
+                html += templates.article(response[item]);
+            }
+            html += templates.tail();
+            resolve(html);
         });
     });
 }

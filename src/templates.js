@@ -40,13 +40,12 @@ function article(data) {
         return ``;
     }
 
-    let html = `
-        <div id="${data.id}" class="hn-post">
-
-        </div>
-    `
-
-    return html;
+    return `
+    <div id="${data.id}" class="hn-post">
+        <p><a href="${data.url}"><strong>${data.title}</strong></a><br/>
+            by: ${data.by}</p>
+    </div>
+`;
 }
 
 function tail() {

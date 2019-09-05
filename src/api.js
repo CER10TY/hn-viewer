@@ -13,25 +13,35 @@ const baselink = "https://hacker-news.firebaseio.com";
 const version = "v0";
 
 function getTrending() {
+    let items = {};
     return new Promise((resolve, reject) => {
         web.get(baselink + "/" + version + "/" + "topstories.json?print=pretty").then(response => {
-            resolve(response);
+            let promises = [];
+            for (let story in response.data) {
+                let promise = axios({
+                    method: 'get',
+                    url: getItemURL(response.data[story])
+                });
+                promises.push(promise);
+            }
+            
+            Promise.all(promises).then(responses => {
+                responses.forEach(response => {
+                    items[response.data.id] = response.data;
+                });
+                resolve(items);
+            });
         }).catch(error => {
-            reject(error.message)
-        })
+            reject(error.message);
+        });
     });
 }
 
-function getItem(id) {
-    return new Promise((resolve, reject) => {
-        web.get(baselink + "/" + version + "/" + "item/" + id + ".json?print=pretty").then(response => {
-            resolve(response);
-        }).catch(error => {
-            reject(error.message)
-        });
-    })
+function getItemURL(id) {
+    return baselink + "/" + version + "/" + "item/" + id + ".json?print=pretty";
 }
 
 module.exports = {
-    getTrending
+    getTrending,
+    getItemURL
 }
