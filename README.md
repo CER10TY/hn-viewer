@@ -1,4 +1,13 @@
-# Hacker News Code
+</br>
+<div align="center">
+  <img src="https://raw.githubusercontent.com/cer10ty/hncode/master/public/images/HNCode.png" alt="HNCode LOgo" height="250px" width="250px"></img>
+</div>
+</br>
+<div align="center">
+  <h1>HNCode</h1>
+  <h2>Visual Studio Code Extension to browse Hacker News (code style)</h2>
+</div>
+</br>
 
 ## Features
 
