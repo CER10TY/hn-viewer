@@ -5,7 +5,7 @@ const path = require('path');
 const viewer = require('./src/viewer');
 const api = require('./src/api');
 
-let config = vscode.workspace.getConfiguration("hnviewer");
+let config = vscode.workspace.getConfiguration("hncode");
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed

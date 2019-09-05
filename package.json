@@ -1,6 +1,6 @@
 {
-	"name": "hnviewer",
-	"displayName": "HNViewer",
+	"name": "hncode",
+	"displayName": "HNCode",
 	"description": "View HackerNews in VSCode",
 	"version": "0.0.1",
 	"publisher": "sjohanson",
@@ -29,19 +29,19 @@
 		"configuration": {
 			"title": "Hacker News",
 			"properties": {
-				"hnviewer.title": {
+				"hncode.title": {
 					"type": "string",
 					"default": "Hacker News",
 					"description": "Set the title of Hacker News window."
 				},
-				"hnviewer.requestTimeout": {
+				"hncode.requestTimeout": {
 					"type": "integer",
 					"default": 10000,
 					"minimum": 1000,
 					"maximum": 60000,
 					"description": "Set the timeout for requests in milliseconds (ms)."
 				},
-				"hnviewer.limitation": {
+				"hncode.limitation": {
 					"type": "integer",
 					"minimum": 1,
 					"maximum": 100,

@@ -3,7 +3,7 @@
 const axios = require("axios");
 const vscode = require("vscode");
 
-let config = vscode.workspace.getConfiguration("hnviewer");
+let config = vscode.workspace.getConfiguration("hncode");
 
 const web = axios.create({
    timeout: config.requestTimeout 

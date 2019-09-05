@@ -1,4 +1,4 @@
-# Hacker News Viewer
+# Hacker News Code
 
 ## Features
 
@@ -12,9 +12,9 @@ todo
 
 This extension contributes the following settings:
 
-* `hnviewer.title`: Set the title of Hacker News window.
-* `hnviewer.requestTimeout`: Set the timeout for requests in milliseconds (ms).
-* `hnviewer.limitation`: Set the amount of items to be loaded on the front page.
+* `hncode.title`: Set the title of Hacker News window.
+* `hncode.requestTimeout`: Set the timeout for requests in milliseconds (ms).
+* `hncode.limitation`: Set the amount of items to be loaded on the front page.
 
 ## Known Issues
 

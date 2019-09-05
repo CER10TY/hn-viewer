@@ -1,4 +1,4 @@
-// This JS file provides all HTML templates for use with HNViewer.
+// This JS file provides all HTML templates for use with HNCode.
 
 function head(stylesheet) {
     return `
@@ -42,7 +42,7 @@ function article(data) {
 
     let html = `
         <div id="${data.id}" class="hn-post">
-            
+
         </div>
     `
 
