@@ -31,6 +31,13 @@ function activate(context) {
 				]
 			}
 		);
+
+		viewer.setStylesheetPath(
+			vscode.Uri.file(
+				path.join(context.extensionPath, "public", "hncode.css")
+			  ).with({ scheme: "vscode-resource" })
+		);
+
 		viewer.createFrontView().then(response => {
 			panel.webview.html = response
 		})

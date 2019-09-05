@@ -35,7 +35,7 @@ function head(stylesheet) {
     `
 }
 
-function article(id, data) {
+function article(id, data, time) {
     if (!data || data === undefined) {
         return ``;
     }
@@ -43,7 +43,7 @@ function article(id, data) {
     return `
     <div id="${data.id}" class="hn-post">
         <p>${id}: <a href="${data.url}"><strong>${data.title}</strong></a><br/>
-            by: ${data.by}</p>
+            ${data.score} points by: ${data.by} ${time} ago | ${data.descendants} comments</p>
     </div>
 `;
 }
