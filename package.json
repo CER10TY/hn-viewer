@@ -6,7 +6,7 @@
 	"publisher": "sjohanson",
 	"author": "Søren Johanson <contact@soeren.codes>",
 	"engines": {
-		"vscode": "^1.35.0"
+		"vscode": "^1.38.0"
 	},
 	"bugs": {
 		"url": "https://github.com/CER10TY/hn-viewer/issues",
@@ -59,7 +59,7 @@
 		"@types/mocha": "^5.2.6",
 		"@types/node": "^10.12.21",
 		"@types/vscode": "^1.38.0",
-		"eslint": "^5.13.0",
+		"eslint": "^5.16.0",
 		"glob": "^7.1.4",
 		"mocha": "^6.1.4",
 		"typescript": "^3.3.1",
