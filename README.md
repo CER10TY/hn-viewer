@@ -10,13 +10,13 @@
 </br>
 
 ## Features
-
+</br>
 * <span style="color: green">Browse the front page of Hacker News (top stories).</span>
 * <span style="color: red">Go to any external links from the extension window.</span>
 * <span style="color: red">View the comments for a post.</span>
 
 <small>(Features marked in <span style="color: red">red</span> are not yet complete.)</small>
-
+</br>
 
 ## Requirements
 
