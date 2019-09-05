@@ -11,13 +11,16 @@ function createFrontView() {
             let html = templates.head(stylesheetPath);
             for(let item in response) {
                 let humanTime;
-                let unixTime = Date.now() - response[item].time;
-                let date = new Date(unixTime * 1000);
-                if (date.getMinutes() > 60) {
-                    humanTime = date.getHours() + " hours";
+                let createTime = new Date(response[item].time * 1000);
+                humanTime = (Date.now() - createTime) / (1000 * 60);
+                if (humanTime > 60) {
+                    humanTime = Math.floor(humanTime / 60);
+                    humanTime += " hours";
                 } else {
-                    humanTime = date.getMinutes() + " minutes";
+                    humanTime = Math.floor(humanTime);
+                    humanTime += " minutes";
                 }
+
                 html += templates.article(item, response[item], humanTime);
             }
             html += templates.tail();
