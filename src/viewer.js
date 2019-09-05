@@ -10,7 +10,7 @@ function createFrontView() {
         api.getTrending().then(response => {
             let html = templates.head();
             for(let item in response) {
-                html += templates.article(response[item]);
+                html += templates.article(item, response[item]);
             }
             html += templates.tail();
             resolve(html);

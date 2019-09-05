@@ -35,14 +35,14 @@ function head(stylesheet) {
     `
 }
 
-function article(data) {
+function article(id, data) {
     if (!data || data === undefined) {
         return ``;
     }
 
     return `
     <div id="${data.id}" class="hn-post">
-        <p><a href="${data.url}"><strong>${data.title}</strong></a><br/>
+        <p>${id}: <a href="${data.url}"><strong>${data.title}</strong></a><br/>
             by: ${data.by}</p>
     </div>
 `;

@@ -23,11 +23,16 @@ function getTrending() {
                     url: getItemURL(response.data[story])
                 });
                 promises.push(promise);
+                if (promises.length >= config.limitation) {
+                    break;
+                }
             }
             
             Promise.all(promises).then(responses => {
+                let count = 1;
                 responses.forEach(response => {
-                    items[response.data.id] = response.data;
+                    items[count] = response.data;
+                    count += 1;
                 });
                 resolve(items);
             });
