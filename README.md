@@ -11,11 +11,16 @@
 
 ## Features
 
-todo
+* <span style="color: green">Browse the front page of Hacker News (top stories).</span>
+* <span style="color: red">Go to any external links from the extension window.</span>
+* <span style="color: red">View the comments for a post.</span>
+
+<small>(Features marked in <span style="color: red">red</span> are not yet complete.)</small>
+
 
 ## Requirements
 
-todo
+This extension requires Visual Studio Code 1.38.0 or later to work properly.
 
 ## Extension Settings
 
@@ -30,8 +35,6 @@ This extension contributes the following settings:
 This doesn't actually work yet.
 
 ## Release Notes
-
-Users appreciate release notes as you update your extension.
 
 ### 0.0.1
 

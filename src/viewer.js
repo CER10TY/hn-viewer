@@ -18,7 +18,6 @@ function createFrontView() {
                 } else {
                     humanTime = date.getMinutes() + " minutes";
                 }
-                console.log(response[item]);
                 html += templates.article(item, response[item], humanTime);
             }
             html += templates.tail();
