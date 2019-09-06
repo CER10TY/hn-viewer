@@ -35,7 +35,43 @@ function getTrending() {
                     count += 1;
                 });
                 resolve(items);
+            }).catch(error => {
+                reject(error.message);
             });
+        }).catch(error => {
+            reject(error.message);
+        });
+    });
+}
+
+function getComments(kids) {
+    let items = {};
+    return new Promise((resolve, reject) => {
+        let promises = [];
+        for (let id in kids) {
+            let promise = axios({
+                method: 'get',
+                url: getItemURL(kids[id])
+            });
+            promises.push(promise);
+        }
+
+        Promise.all(promises).then(responses => {
+            responses.forEach(response => {
+                items[response.data.id] = response.data;
+            });
+            resolve(items);
+        }).catch(error => {
+            reject(error.message);
+        });
+    });
+}
+
+function getItem(id) {
+    return new Promise((resolve, reject) => {
+        let url = getItemURL(id);
+        web.get(url).then(response => {
+            resolve(response.data);
         }).catch(error => {
             reject(error.message);
         });
@@ -48,5 +84,7 @@ function getItemURL(id) {
 
 module.exports = {
     getTrending,
+    getComments,
+    getItem,
     getItemURL
 }

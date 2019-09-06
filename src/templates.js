@@ -15,10 +15,11 @@ function head(stylesheet) {
                     const vscode = acquireVsCodeApi();
 
                     // Handle vs extension message passing
-                    function handleMessageSending(messageText, messageCommand) {
+                    function handleMessageSending(messageText, messageCommand, messageArguments) {
                         vscode.postMessage({
                             command: messageCommand,
-                            text: messageText
+                            text: messageText,
+                            args: messageArguments
                         });
                     }
 
@@ -41,11 +42,41 @@ function article(id, data, time, link) {
     }
 
     return `
-    <div id="${data.id}" class="hn-post">
-        <p>${id}: <a href="${data.url}"><strong>${data.title}</strong></a> (${link})<br/>
-            ${data.score} points by: ${data.by} ${time} ago | ${data.descendants} comments</p>
-    </div>
-`;
+        <div id="${data.id}" class="hn-post">
+            <p>${id}: <a href="${data.url}"><strong>${data.title}</strong></a> (${link})<br/>
+                ${data.score} points by: ${data.by} ${time} ago | <a href="#" onclick="handleMessageSending('View comments', 'comments', ${data.id})">${data.descendants} comments</a></p>
+        </div>
+    `;
+}
+
+function commentArticle(data, time, link) {
+    if (!data || data === undefined) {
+        return ``;
+    }
+
+    return `
+        <div id="${data.id}" class="hn-post">
+            <p><a href="${data.url}"><strong>${data.title}</strong></a> (${link})<br/>
+                ${data.score} points by: ${data.by} ${time} ago | ${data.descendants} comments</p>
+        </div>
+    `;
+}
+
+function comment(data, time) {
+    if (!data || data === undefined) {
+        return ``;
+    }
+
+    return `
+        <div id="${data.id}" class="hn-comment">
+            <p>${data.by} ${time} ago [-]<br/>
+            ${data.text}</p>
+        </div>
+    `;
+}
+
+function hr() {
+    return `<hr>`;
 }
 
 function tail() {
@@ -58,5 +89,8 @@ function tail() {
 module.exports = {
     head,
     article,
+    commentArticle,
+    comment,
+    hr,
     tail
 }

@@ -25,7 +25,7 @@ function activate(context) {
 			config.title,
 			vscode.ViewColumn.One,
 			{
-				enableScripts: false,
+				enableScripts: true,
 				localResourceRoots: [
 					vscode.Uri.file(path.join(context.extensionPath, "public"))
 				]
@@ -38,9 +38,24 @@ function activate(context) {
 			  ).with({ scheme: "vscode-resource" })
 		);
 
+		// viewer.createCommentView(8863).then(response => {
+		// 	panel.webview.html = response;
+		// });
 		viewer.createFrontView().then(response => {
-			panel.webview.html = response
-		})
+			panel.webview.html = response;
+		});
+
+		panel.webview.onDidReceiveMessage(
+			message => {
+				switch (message.command) {
+					case "comments":
+						viewer.createCommentView(message.args).then(response => {
+							panel.webview.html = response;
+						});
+						break;
+				}
+			}
+		);
 	});
 
 	context.subscriptions.push(disposable);
