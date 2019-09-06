@@ -6,24 +6,30 @@ const api = require("./api");
 let stylesheetPath;
 
 function createFrontView() {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
         api.getTrending().then(response => {
             let html = templates.head(stylesheetPath);
-            for(let item in response) {
+            for (let item in response) {
                 let humanTime = convertTime(response[item].time);
 
-                let linkRe = /\/\/([a-zA-Z\.]*)\//m;
-                let links = response[item].url.match(linkRe);
-                html += templates.article(item, response[item], humanTime, links[1]);
+                let linkRe = new RegExp('\/\/([a-zA-Z\.]*)\/', 'm');
+                let url = response[item].url;
+                if (url) {
+                    let links = url.match(linkRe);
+                    url = links[1];
+                }
+                html += templates.article(item, response[item], humanTime, url);
             }
             html += templates.tail();
             resolve(html);
+        }).catch(error => {
+            reject(error.message);
         });
     });
 }
 
 function createCommentView(id) {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
         // Get the story item first.
         api.getItem(id).then(response => {
             let html = templates.head(stylesheetPath);
@@ -42,6 +48,8 @@ function createCommentView(id) {
                 html += templates.tail();
                 resolve(html);
             });
+        }).catch(error => {
+            reject(error.message);
         });
     });
 }

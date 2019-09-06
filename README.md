@@ -1,6 +1,6 @@
 </br>
 <div align="center">
-  <img src="https://raw.githubusercontent.com/cer10ty/hncode/master/public/images/HNCode.png" alt="HNCode LOgo" height="250px" width="250px"></img>
+  <img src="https://raw.githubusercontent.com/cer10ty/hncode/master/public/images/HNCode.png" alt="HNCode Logo" height="250px" width="250px"></img>
 </div>
 </br>
 <div align="center">
