@@ -35,14 +35,14 @@ function head(stylesheet) {
     `
 }
 
-function article(id, data, time) {
+function article(id, data, time, link) {
     if (!data || data === undefined) {
         return ``;
     }
 
     return `
     <div id="${data.id}" class="hn-post">
-        <p>${id}: <a href="${data.url}"><strong>${data.title}</strong></a><br/>
+        <p>${id}: <a href="${data.url}"><strong>${data.title}</strong></a> (${link})<br/>
             ${data.score} points by: ${data.by} ${time} ago | ${data.descendants} comments</p>
     </div>
 `;
