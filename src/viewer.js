@@ -34,7 +34,7 @@ function createCommentView(id) {
 
             html += templates.commentArticle(response, humanTime, links[1]);
             html += templates.hr();
-            api.getComments(response.kids).then(response => {
+            api.getComments(response.kids, true).then(response => {
                 for (let item in response) {
                     let humanTime = convertTime(response[item].time);
                     html += templates.comment(response[item], humanTime);

@@ -76,6 +76,19 @@ function comment(data, time) {
     `;
 }
 
+function commentIndented(data, time) {
+    if (!data || data === undefined) {
+        return ``;
+    }
+
+    return `
+        <div id="${data.id}" class="hn-comment-indented">
+            <p>${data.by} ${time} ago [-]<br/>
+            ${data.text}</p>
+        </div>
+    `
+}
+
 function hr() {
     return `<hr>`;
 }
@@ -92,6 +105,7 @@ module.exports = {
     article,
     commentArticle,
     comment,
+    commentIndented,
     hr,
     tail
 }

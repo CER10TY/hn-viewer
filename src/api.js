@@ -44,7 +44,7 @@ function getTrending() {
     });
 }
 
-function getComments(kids) {
+function getComments(kids, isTopLevel) {
     let items = {};
     return new Promise((resolve, reject) => {
         let promises = [];
