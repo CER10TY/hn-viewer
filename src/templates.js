@@ -57,7 +57,8 @@ function commentArticle(data, time, link) {
     return `
         <div id="${data.id}" class="hn-post">
             <p><a href="${data.url}"><strong>${data.title}</strong></a> (${link})<br/>
-                ${data.score} points by: ${data.by} ${time} ago | ${data.descendants} comments</p>
+                ${data.score} points by: ${data.by} ${time} ago | ${data.descendants} comments | <a href="#" onclick="handleMessageSending('go back', 'frontpage')">back to front page</a></p>
+            
         </div>
     `;
 }

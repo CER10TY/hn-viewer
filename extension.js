@@ -48,6 +48,11 @@ function activate(context) {
 		panel.webview.onDidReceiveMessage(
 			message => {
 				switch (message.command) {
+					case "frontpage":
+						viewer.createFrontView().then(response => {
+							panel.webview.html = response;
+						})
+						break;
 					case "comments":
 						viewer.createCommentView(message.args).then(response => {
 							panel.webview.html = response;
