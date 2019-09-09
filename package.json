@@ -15,6 +15,10 @@
 	"categories": [
 		"Other"
 	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/cer10ty/hncode.git"
+	  },
 	"activationEvents": [
 		"onCommand:extension.hackerNews"
 	],
