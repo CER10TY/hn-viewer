@@ -44,7 +44,7 @@ function getTrending() {
     });
 }
 
-function getComments(kids, isTopLevel) {
+function getComments(kids) {
     let items = {};
     return new Promise((resolve, reject) => {
         let promises = [];
@@ -58,7 +58,9 @@ function getComments(kids, isTopLevel) {
 
         Promise.all(promises).then(responses => {
             responses.forEach(response => {
-                items[response.data.id] = response.data;
+                if (response.data) {
+                    items[response.data.id] = response.data;
+                }
             });
             resolve(items);
         }).catch(error => {

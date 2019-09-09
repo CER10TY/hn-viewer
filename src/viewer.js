@@ -15,10 +15,16 @@ function createFrontView() {
                 let linkRe = new RegExp('\/\/([a-zA-Z\.]*)\/', 'm');
                 let url = response[item].url;
                 if (url) {
+                    // External post
                     let links = url.match(linkRe);
-                    url = links[1];
+                    if (links) {
+                        url = links[1];
+                    }
+                    html += templates.article(item, response[item], humanTime, url);
+                } else if (response[item].id && !url) {
+                    // Self post
+                    html += templates.selfPost(item, response[item], humanTime)
                 }
-                html += templates.article(item, response[item], humanTime, url);
             }
             html += templates.tail();
             resolve(html);
@@ -34,13 +40,19 @@ function createCommentView(id) {
         api.getItem(id).then(response => {
             let html = templates.head(stylesheetPath);
             let humanTime = convertTime(response.time);
-
-            let linkRe = /\/\/([a-zA-Z\.]*)\//m;
-            let links = response.url.match(linkRe);
-
-            html += templates.commentArticle(response, humanTime, links[1]);
+            let url = response.url;
+            if (url) {
+                let linkRe = /\/\/([a-zA-Z\.]*)\//m;
+                let links = response.url.match(linkRe);
+                if (links) {
+                    url = links[1];
+                }
+                html += templates.commentArticle(response, humanTime, links[1]);
+            } else if (response.id && !url) {
+                html += templates.commentSelfPost(response, humanTime);
+            }
             html += templates.hr();
-            api.getComments(response.kids, true).then(response => {
+            api.getComments(response.kids).then(response => {
                 for (let item in response) {
                     let humanTime = convertTime(response[item].time);
                     html += templates.comment(response[item], humanTime);

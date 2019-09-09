@@ -49,6 +49,19 @@ function article(id, data, time, link) {
     `;
 }
 
+function selfPost(id, data, time) {
+    if (!data || data === undefined) {
+        return ``;
+    }
+
+    return `
+        <div id="${data.id}" class="hn-selfpost">
+            <p>${id}: <a href="#" onclick="handleMessageSending('View comments', 'comments', ${data.id})"><strong>${data.title}</strong></a><br/>
+                ${data.score} points by: ${data.by} ${time} ago | <a href="#" onclick="handleMessageSending('View comments', 'comments', ${data.id})">${data.descendants} comments</a></p>
+        </div>
+    `;
+}
+
 function commentArticle(data, time, link) {
     if (!data || data === undefined) {
         return ``;
@@ -59,6 +72,20 @@ function commentArticle(data, time, link) {
             <p><a href="${data.url}"><strong>${data.title}</strong></a> (${link})<br/>
                 ${data.score} points by: ${data.by} ${time} ago | ${data.descendants} comments | <a href="#" onclick="handleMessageSending('go back', 'frontpage')">back to front page</a></p>
             
+        </div>
+    `;
+}
+
+function commentSelfPost(data, time) {
+    if (!data || data === undefined) {
+        return ``;
+    }
+
+    return `
+        <div id="${data.id}" class="hn-selfpost">
+            <p><a href="#" onclick="handleMessageSending('View comments', 'comments', ${data.id})"><strong>${data.title}</strong></a><br/>
+                ${data.score} points by: ${data.by} ${time} ago | <a href="#" onclick="handleMessageSending('View comments', 'comments', ${data.id})">${data.descendants} comments</a></p>
+            <p>${data.text}</p>
         </div>
     `;
 }
@@ -103,6 +130,8 @@ function tail() {
 module.exports = {
     head,
     article,
+    selfPost,
+    commentSelfPost,
     commentArticle,
     comment,
     commentIndented,
