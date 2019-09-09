@@ -1,7 +1,9 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
-import 'viewer';
-import 'api';
+import './viewer';
+import './api';
+import { appendFile } from 'fs';
+import { getTrending } from './api';
 
 let config = vscode.workspace.getConfiguration("hncode");
 
@@ -10,7 +12,7 @@ export function activate(context: vscode.ExtensionContext) {
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with registerCommand
 	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('extension.helloWorld', () => {
+	let disposable = vscode.commands.registerCommand('extension.hackerNews', () => {
 		// The code you place here will be executed every time your command is executed
 		let panel = vscode.window.createWebviewPanel(
 			"hackernews",
@@ -23,6 +25,8 @@ export function activate(context: vscode.ExtensionContext) {
 				]
 			}
 		);
+
+		getTrending();
 	});
 
 	context.subscriptions.push(disposable);
