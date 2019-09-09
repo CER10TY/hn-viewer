@@ -30,9 +30,17 @@ This extension contributes the following settings:
 
 ## Known Issues
 
-This doesn't actually work yet.
+* Child comments are not being displayed yet.
+* Formatting may be messed up in certain comment sections.
 
 ## Release Notes
+
+### 0.0.5
+
+*   NEW: Display parent comments when clicking on "x comments", like in HN.
+*   NEW: Display self posts when clicking on the link.
+*   NEW: URL information to the right of every post (except self), like in HN.
+*   FIXED: Undefined comments should no longer be shown in any view.
 
 ### 0.0.1
 
