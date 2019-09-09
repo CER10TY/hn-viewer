@@ -3,7 +3,7 @@
 	"displayName": "HNCode",
 	"description": "View HackerNews in VSCode",
 	"version": "0.0.5",
-	"publisher": "sjohanson",
+	"publisher": "Søren Johanson",
 	"author": "Søren Johanson <contact@soeren.codes>",
 	"engines": {
 		"vscode": "^1.38.0"
