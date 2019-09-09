@@ -1,9 +1,12 @@
 # Change Log
 
-All notable changes to the "hncode" extension will be documented in this file.
+### 0.0.5
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+*   NEW: Display parent comments when clicking on "x comments", like in HN.
+*   NEW: Display self posts when clicking on the link.
+*   NEW: URL information to the right of every post (except self), like in HN.
+*   FIXED: Undefined comments should no longer be shown in any view.
 
-## [Unreleased]
+### 0.0.1
 
-- Initial release
+Pre-alpha Release
