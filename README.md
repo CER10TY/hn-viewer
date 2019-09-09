@@ -12,8 +12,9 @@
 ## Features
 
 * Browse the front page of Hacker News (top stories).
-* (Go to any external links from the extension window.)
-* (View the comments for a post.)
+* Browse any self post.
+* Go to any external links from the extension window.
+* View the comments for a post.
 
 ## Requirements
 
