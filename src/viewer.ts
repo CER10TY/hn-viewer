@@ -1,5 +1,5 @@
 import { getTrending, getComments, getItem } from './api';
-import { head, article, selfPost, commentArticle, hr, tail } from './templates';
+import { head, article, selfPost, commentArticle, hr, tail, comment } from './templates';
 import * as vscode from 'vscode';
 
 let stylesheetPath: vscode.Uri;
@@ -48,7 +48,12 @@ export function createCommentView(id: string) {
             }
             html += hr();
             getComments(response.kids).then(response => {
-                // do nothing
+                for (let item in response) {
+                    let humanTime: string = convertTime(response[item].time);
+                    html += comment(response[item], humanTime);
+                }
+                html += tail();
+                resolve(html);
             });
         });
     });

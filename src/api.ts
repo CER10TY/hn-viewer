@@ -43,6 +43,8 @@ export async function getTrending (): Promise<KeyMap> {
                     }
                 });
                 resolve(items);
+            }).catch(error => {
+                reject(error.message);
             });
         } else {
             reject(tops.statusCode);
@@ -73,6 +75,9 @@ export async function getComments (kids: Array<string>): Promise<KeyMap> {
                     items[response.id] = response;
                 }
             });
+            resolve(items);
+        }).catch(error => {
+            reject(error.message);
         });
     });
 }
