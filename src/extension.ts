@@ -1,11 +1,6 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
-import { appendFile } from 'fs';
-import { getTrending } from './api';
 import { setStylesheetPath, createFrontView, createCommentView } from './viewer';
-import { create } from 'domain';
-
-let config = vscode.workspace.getConfiguration("hncode");
 
 export function activate(context: vscode.ExtensionContext) {
 
@@ -13,6 +8,9 @@ export function activate(context: vscode.ExtensionContext) {
 	// Now provide the implementation of the command with registerCommand
 	// The commandId parameter must match the command field in package.json
 	let disposable = vscode.commands.registerCommand('extension.hackerNews', () => {
+
+		let config: vscode.WorkspaceConfiguration = vscode.workspace.getConfiguration("hncode");
+		
 		// The code you place here will be executed every time your command is executed
 		let panel = vscode.window.createWebviewPanel(
 			"hackernews",
@@ -51,6 +49,29 @@ export function activate(context: vscode.ExtensionContext) {
 				}
 			}
 		);
+
+		vscode.workspace.onDidChangeConfiguration(change => {
+			if (change.affectsConfiguration("hncode")) {
+				// We need to reopen if title is changed
+				if (config.title !== vscode.workspace.getConfiguration("hncode").title) {
+					vscode.window.showInformationMessage(
+						'Reopen HNCode for Configuration Changes to take effect.',
+						'Reopen'
+					).then(selectedAction => {
+						if (selectedAction === 'Reopen') {
+							panel.dispose();
+							vscode.commands.executeCommand("extension.hackerNews");
+						}
+					});
+				}
+				// Reload front view if limitations change
+				if (config.limitation !== vscode.workspace.getConfiguration("hncode").limitation) {
+					panel.dispose();
+					vscode.commands.executeCommand("extension.hackerNews");
+				}
+			}
+			config = vscode.workspace.getConfiguration("hncode");
+		});
 	});
 
 	context.subscriptions.push(disposable);
