@@ -35,6 +35,11 @@ This extension contributes the following settings:
 
 ## Release Notes
 
+### 0.0.8
+
+* NEW: Rewritten HNCode in TypeScript.
+* REMOVED: JavaScript implementation.
+
 ### 0.0.5
 
 *   NEW: Display parent comments when clicking on "x comments", like in HN.
