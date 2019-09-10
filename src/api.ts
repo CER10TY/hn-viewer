@@ -16,7 +16,6 @@ export async function getTrending (): Promise<KeyMap> {
         let tops: rm.IRestResponse<Array<String>> = await rest.get<Array<String>>(version + '/topstories.json?print=pretty');
         let count: number = 1;
         let promises: Array<Promise<KeyMap>> = [];
-        
         if (tops.statusCode === 200 && tops.result) {
             for (let item in tops.result) {
                 let fetch: Promise<KeyMap> = new Promise(async (resolve, reject) => {
@@ -30,7 +29,7 @@ export async function getTrending (): Promise<KeyMap> {
                     } 
                 });
                 promises.push(fetch);
-                if (promises.length > config.limitation) {
+                if (promises.length >= config.limitation) {
                     break;
                 }
             }

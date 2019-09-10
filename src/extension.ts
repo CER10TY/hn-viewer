@@ -51,6 +51,31 @@ export function activate(context: vscode.ExtensionContext) {
 				}
 			}
 		);
+
+		vscode.workspace.onDidChangeConfiguration(change => {
+			if (change.affectsConfiguration("hncode")) {
+				// We need to reopen if title is changed
+				if (config.title !== vscode.workspace.getConfiguration("hncode").title) {
+					vscode.window.showInformationMessage(
+						'Reopen HNCode for Configuration Changes to take effect.',
+						'Reopen'
+					).then(selectedAction => {
+						if (selectedAction === 'Reopen') {
+							panel.dispose();
+							vscode.commands.executeCommand("extension.hackerNews");
+						}
+					});
+				}
+				// Reload front view if limitations change
+				if (config.limitation !== vscode.workspace.getConfiguration("hncode").limitation) {
+					console.log(change);
+					panel.dispose();
+					config.update('limitation', vscode.workspace.getConfiguration("hncode").limitation);
+					vscode.commands.executeCommand("extension.hackerNews");
+				}
+			}
+			config = vscode.workspace.getConfiguration("hncode");
+		});
 	});
 
 	context.subscriptions.push(disposable);
