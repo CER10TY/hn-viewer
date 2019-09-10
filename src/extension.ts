@@ -1,9 +1,8 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
-import './viewer';
-import './api';
 import { appendFile } from 'fs';
 import { getTrending } from './api';
+import { setStylesheetPath, createFrontView } from './viewer';
 
 let config = vscode.workspace.getConfiguration("hncode");
 
@@ -26,7 +25,14 @@ export function activate(context: vscode.ExtensionContext) {
 			}
 		);
 
-		getTrending();
+		let stylesheet: vscode.Uri = vscode.Uri.file(
+			path.join(context.extensionPath, "public", "hncode.css")
+		).with({ scheme: "vscode-resource" });
+		setStylesheetPath(stylesheet);
+
+		createFrontView().then(response => {
+			panel.webview.html = response;
+		});
 	});
 
 	context.subscriptions.push(disposable);

@@ -7,11 +7,11 @@ const baselink: string = "https://hacker-news.firebaseio.com/";
 const version: string = "v0";
 let rest: rm.RestClient = new rm.RestClient('hn', baselink);
 
-export async function getTrending (): Promise<Object> {
+export async function getTrending (): Promise<{[k: string]: any}> {
     return new Promise<Object>(async (resolve, reject) => {
         let items: {[k: string]: any} = {};
         let tops: rm.IRestResponse<Array<String>> = await rest.get<Array<String>>(version + '/topstories.json?print=pretty');
-        let count: number = 0;
+        let count: number = 1;
         let promises: Array<Promise<JSON>> = [];
         
         if (tops.statusCode === 200 && tops.result) {

@@ -1,4 +1,6 @@
-export function head(stylesheet: string) {
+import * as vscode from 'vscode';
+
+export function head(stylesheet: vscode.Uri): string {
     return `
         <!DOCTYPE html>
             <html lang="en">
@@ -28,5 +30,38 @@ export function head(stylesheet: string) {
                     }
                 </script>
                 <!-- We close body tags in the rest of the templates -->
+    `;
+}
+
+export function article(id: string, data: {[k: string]: any}, time: string, link: string): string {
+    if (!data || data === undefined) {
+        return ``;
+    }
+
+    return `
+        <div id="${data.id}" class="hn-post">
+            <p>${id}: <a href="${data.url}"><strong>${data.title}</strong></a> (${link})<br/>
+                ${data.score} points by: ${data.by} ${time} ago | <a href="#" onclick="handleMessageSending('View comments', 'comments', ${data.id})">${data.descendants} comments</a></p>
+        </div>
+    `;
+}
+
+export function selfPost(id: string, data: {[k: string]: any}, time: string): string {
+    if (!data || data === undefined) {
+        return ``;
+    }
+
+    return `
+        <div id="${data.id}" class="hn-selfpost">
+            <p>${id}: <a href="#" onclick="handleMessageSending('View comments', 'comments', ${data.id})"><strong>${data.title}</strong></a><br/>
+                ${data.score} points by: ${data.by} ${time} ago | <a href="#" onclick="handleMessageSending('View comments', 'comments', ${data.id})">${data.descendants} comments</a></p>
+        </div>
+    `;
+}
+
+export function tail() {
+    return `
+        </body>
+        </html>
     `;
 }
