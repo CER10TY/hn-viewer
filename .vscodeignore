@@ -1,8 +1,19 @@
 .vscode/**
 .vscode-test/**
+<<<<<<< HEAD
 test/**
 .gitignore
 vsc-extension-quickstart.md
 **/jsconfig.json
 **/*.map
 **/.eslintrc.json
+=======
+out/test/**
+src/**
+.gitignore
+vsc-extension-quickstart.md
+**/tsconfig.json
+**/tslint.json
+**/*.map
+**/*.ts
+>>>>>>> typescript
