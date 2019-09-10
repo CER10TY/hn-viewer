@@ -2,7 +2,8 @@ import * as vscode from 'vscode';
 import * as path from 'path';
 import { appendFile } from 'fs';
 import { getTrending } from './api';
-import { setStylesheetPath, createFrontView } from './viewer';
+import { setStylesheetPath, createFrontView, createCommentView } from './viewer';
+import { create } from 'domain';
 
 let config = vscode.workspace.getConfiguration("hncode");
 
@@ -33,6 +34,23 @@ export function activate(context: vscode.ExtensionContext) {
 		createFrontView().then(response => {
 			panel.webview.html = response;
 		});
+
+		panel.webview.onDidReceiveMessage(
+			message => {
+				switch (message.command) {
+					case "frontpage":
+						createFrontView().then(response => {
+							panel.webview.html = response;
+						});
+						break;
+					case "comments": 
+						createCommentView(message.args).then(response => {
+							panel.webview.html = response;
+						});
+						break;
+				}
+			}
+		);
 	});
 
 	context.subscriptions.push(disposable);

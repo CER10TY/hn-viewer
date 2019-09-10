@@ -1,7 +1,6 @@
-import { getTrending } from './api';
-import { head, article, selfPost, tail } from './templates';
+import { getTrending, getComments, getItem } from './api';
+import { head, article, selfPost, commentArticle, hr, tail } from './templates';
 import * as vscode from 'vscode';
-import { timingSafeEqual } from 'crypto';
 
 let stylesheetPath: vscode.Uri;
 
@@ -10,13 +9,13 @@ export function createFrontView() {
         getTrending().then(response => {
             let html: string = head(stylesheetPath);
             for (let item in response) {
-                let humanTime = convertTime(response[item].time);
+                let humanTime: string = convertTime(response[item].time);
 
-                let linkRe = new RegExp('\/\/([a-zA-Z\.0-9\-\_]*)\/', 'm');
-                let url = response[item].url;
+                let linkRe: RegExp = new RegExp('\/\/([a-zA-Z\.0-9\-\_]*)\/', 'm');
+                let url: string = response[item].url;
                 if (url) {
                     // External post
-                    let links = url.match(linkRe);
+                    let links: RegExpMatchArray | null = url.match(linkRe);
                     if (links) {
                         url = links[1];
                     }
@@ -32,6 +31,29 @@ export function createFrontView() {
     });
 }
 
+export function createCommentView(id: string) {
+    return new Promise<string>((resolve, reject) => {
+        getItem(id).then(response => {
+            let html: string = head(stylesheetPath);
+            let humanTime: string = convertTime(response.time);
+            let url: string = response.url;
+
+            if (url) {
+                let linkRe: RegExp = new RegExp('\/\/([a-zA-Z\.0-9\-\_]*)\/', 'm');
+                let links: RegExpMatchArray | null = url.match(linkRe);
+                if (links) {
+                    url = links[1];
+                }
+                html += commentArticle(response, humanTime, url);
+            }
+            html += hr();
+            getComments(response.kids).then(response => {
+                // do nothing
+            });
+        });
+    });
+}
+
 export function setStylesheetPath(path: vscode.Uri) {
     stylesheetPath = path;
 }
@@ -41,7 +63,7 @@ function convertTime(createTime: number) {
     // HN API provides time in seconds; JS wants it in milliseconds
     let createdTime: Date = new Date(createTime * 1000);
     // Divide back to seconds
-    humanTime = (Date.now() - createdTime.getDate()) / 1000;
+    humanTime = (Date.now() - createdTime.getTime()) / 1000;
 
     // Now we technically need to go from minutes up till years, checking if > every time
     // According to this: https://stackoverflow.com/questions/6665997/switch-statement-for-greater-than-less-than if statements are the fastes way

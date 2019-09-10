@@ -1,5 +1,7 @@
 import * as vscode from 'vscode';
 
+import { KeyMap } from './interface';
+
 export function head(stylesheet: vscode.Uri): string {
     return `
         <!DOCTYPE html>
@@ -33,7 +35,7 @@ export function head(stylesheet: vscode.Uri): string {
     `;
 }
 
-export function article(id: string, data: {[k: string]: any}, time: string, link: string): string {
+export function article(id: string, data: KeyMap, time: string, link: string): string {
     if (!data || data === undefined) {
         return ``;
     }
@@ -46,7 +48,7 @@ export function article(id: string, data: {[k: string]: any}, time: string, link
     `;
 }
 
-export function selfPost(id: string, data: {[k: string]: any}, time: string): string {
+export function selfPost(id: string, data: KeyMap, time: string): string {
     if (!data || data === undefined) {
         return ``;
     }
@@ -56,6 +58,39 @@ export function selfPost(id: string, data: {[k: string]: any}, time: string): st
             <p>${id}: <a href="#" onclick="handleMessageSending('View comments', 'comments', ${data.id})"><strong>${data.title}</strong></a><br/>
                 ${data.score} points by: ${data.by} ${time} ago | <a href="#" onclick="handleMessageSending('View comments', 'comments', ${data.id})">${data.descendants} comments</a></p>
         </div>
+    `;
+}
+
+export function commentArticle(data: KeyMap, time: string, link: string) {
+    if (!data || data === undefined) {
+        return ``;
+    }
+
+    return `
+        <div id="${data.id}" class="hn-post">
+            <p><a href="${data.url}"><strong>${data.title}</strong></a> (${link})<br/>
+                ${data.score} points by: ${data.by} ${time} ago | ${data.descendants} comments | <a href="#" onclick="handleMessageSending('go back', 'frontpage')">back to front page</a></p>
+            
+        </div>
+    `;
+}
+
+export function comment(data: KeyMap, time: string) {
+    if (!data || data === undefined) {
+        return ``;
+    }
+
+    return `
+        <div id="${data.id}" class="hn-comment">
+            <p>${data.by} ${time} ago [-]<br/>
+            ${data.text}</p>
+        </div>
+    `;
+}
+
+export function hr() {
+    return `
+        <hr>
     `;
 }
 
