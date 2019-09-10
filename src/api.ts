@@ -2,9 +2,6 @@ import * as rm from 'typed-rest-client/RestClient';
 import * as vscode from 'vscode';
 
 import { KeyMap } from './interface';
-import { Key } from 'readline';
-
-let config: vscode.WorkspaceConfiguration = vscode.workspace.getConfiguration("hncode");
 
 const baselink: string = "https://hacker-news.firebaseio.com/";
 const version: string = "v0";
@@ -29,7 +26,7 @@ export async function getTrending (): Promise<KeyMap> {
                     } 
                 });
                 promises.push(fetch);
-                if (promises.length >= config.limitation) {
+                if (promises.length >= vscode.workspace.getConfiguration("hncode").limitation) {
                     break;
                 }
             }
