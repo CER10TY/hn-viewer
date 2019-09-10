@@ -12,14 +12,35 @@ export async function getTrending (): Promise<Object> {
         let items: {[k: string]: any} = {};
         let tops: rm.IRestResponse<Array<String>> = await rest.get<Array<String>>(version + '/topstories.json?print=pretty');
         let count: number = 0;
+        let promises: Array<Promise<JSON>> = [];
         
         if (tops.statusCode === 200 && tops.result) {
-            tops.result.forEach(async element => {
-                let story: rm.IRestResponse<JSON> = await rest.get<JSON>(version + '/item/' + element + '.json?print=pretty');
-                items[count] = story;
+            for (let item in tops.result) {
+                let fetch: Promise<JSON> = new Promise(async (resolve, reject) => {
+                    if (tops.result) {
+                       let story: rm.IRestResponse<JSON> = await rest.get<JSON>(version + '/item/' + tops.result[item] + '.json?print=pretty');
+                       if (story.result) {
+                           resolve(story.result);
+                       } else {
+                           reject();
+                       }
+                    } 
+                });
+                promises.push(fetch);
+                if (promises.length > config.limitation) {
+                    break;
+                }
+            }
+
+            Promise.all(promises).then(responses => {
+                responses.forEach(response => {
+                    if (response) {
+                        items[count] = response;
+                        count += 1;
+                    }
+                });
+                resolve(items);
             });
-            resolve(items);
-            console.log(items);
         } else {
             reject(tops.statusCode);
         }
