@@ -35,6 +35,10 @@ This extension contributes the following settings:
 
 ## Release Notes
 
+### 0.1.3 
+
+* FIXED: Possible uncaught network errors in API requests.
+
 ### 0.1.0
 
 * FIXED: Self posts not being viewable.
