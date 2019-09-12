@@ -1,5 +1,5 @@
 import { getTrending, getComments, getItem } from './api';
-import { head, article, selfPost, commentArticle, hr, tail, comment } from './templates';
+import { head, article, selfPost, commentArticle, hr, tail, comment, commentSelfPost, commentIndented } from './templates';
 import * as vscode from 'vscode';
 
 let stylesheetPath: vscode.Uri;
@@ -27,6 +27,8 @@ export function createFrontView() {
             }
             html += tail();
             resolve(html);
+        }).catch(error => {
+            reject(error.message);
         });
     });
 }
@@ -38,6 +40,8 @@ export function createCommentView(id: string) {
             let humanTime: string = convertTime(response.time);
             let url: string = response.url;
 
+            const TOP_LEVEL_ID: number = response.id;
+
             if (url) {
                 let linkRe: RegExp = new RegExp('\/\/([a-zA-Z\.0-9\-\_]*)\/', 'm');
                 let links: RegExpMatchArray | null = url.match(linkRe);
@@ -45,6 +49,9 @@ export function createCommentView(id: string) {
                     url = links[1];
                 }
                 html += commentArticle(response, humanTime, url);
+            } else {
+                // Self post
+                html += commentSelfPost(response, humanTime);
             }
             html += hr();
             getComments(response.kids).then(response => {
@@ -55,6 +62,8 @@ export function createCommentView(id: string) {
                 html += tail();
                 resolve(html);
             });
+        }).catch(error => {
+            reject(error.message);
         });
     });
 }

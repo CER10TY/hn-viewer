@@ -3,13 +3,15 @@ import * as vscode from 'vscode';
 
 import { KeyMap } from './interface';
 
+let config: vscode.WorkspaceConfiguration = vscode.workspace.getConfiguration("hncode");
+
 const baselink: string = "https://hacker-news.firebaseio.com/";
 const version: string = "v0";
 let rest: rm.RestClient = new rm.RestClient('hn', baselink);
 
 export async function getTrending (): Promise<KeyMap> {
-    return new Promise<Object>(async (resolve, reject) => {
-        let items: {[k: string]: any} = {};
+    return new Promise<KeyMap>(async (resolve, reject) => {
+        let items: KeyMap = {};
         let tops: rm.IRestResponse<Array<String>> = await rest.get<Array<String>>(version + '/topstories.json?print=pretty');
         let count: number = 1;
         let promises: Array<Promise<KeyMap>> = [];
@@ -49,7 +51,7 @@ export async function getTrending (): Promise<KeyMap> {
 }
 
 export async function getComments (kids: Array<string>): Promise<KeyMap> {
-    return new Promise<Object>(async (resolve, reject) => {
+    return new Promise<KeyMap>(async (resolve, reject) => {
         let items: KeyMap = {};
         let promises: Array<Promise<KeyMap>> = [];
 
@@ -66,7 +68,7 @@ export async function getComments (kids: Array<string>): Promise<KeyMap> {
         }
 
         Promise.all(promises).then(responses => {
-            responses.forEach(response => {
+            responses.forEach(async response => {
                 if (response) {
                     items[response.id] = response;
                 }
@@ -78,7 +80,7 @@ export async function getComments (kids: Array<string>): Promise<KeyMap> {
     });
 }
 
-export async function getItem (id: String | string): Promise<{[k: string]: any}> {
+export async function getItem (id: String | string): Promise<KeyMap> {
     return new Promise<KeyMap>(async (resolve, reject) => {
         let url: string = getItemURL(id);
         let story: rm.IRestResponse<KeyMap> = await rest.get<KeyMap>(url);
