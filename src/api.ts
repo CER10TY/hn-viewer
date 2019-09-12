@@ -28,7 +28,7 @@ export async function getTrending (): Promise<KeyMap> {
                     } 
                 });
                 promises.push(fetch);
-                if (promises.length >= config.limitation) {
+                if (promises.length >= vscode.workspace.getConfiguration("hncode").limitation) {
                     break;
                 }
             }
