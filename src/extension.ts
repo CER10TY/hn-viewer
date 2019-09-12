@@ -46,6 +46,10 @@ export function activate(context: vscode.ExtensionContext) {
 							panel.webview.html = response;
 						});
 						break;
+					case "childComments":
+						console.log(message);
+						// We have panel.webview.html available to us
+						// Maybe append
 				}
 			}
 		);
