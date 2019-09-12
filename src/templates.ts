@@ -75,6 +75,20 @@ export function commentArticle(data: KeyMap, time: string, link: string) {
     `;
 }
 
+export function commentSelfPost(data: KeyMap, time: string) {
+    if (!data || data === undefined) {
+        return ``;
+    }
+
+    return `
+        <div id="${data.id}" class="hn-selfpost">
+            <p><a href="#" onclick="handleMessageSending('View comments', 'comments', ${data.id})"><strong>${data.title}</strong></a><br/>
+                ${data.score} points by: ${data.by} ${time} ago | <a href="#" onclick="handleMessageSending('View comments', 'comments', ${data.id})">${data.descendants} comments</a> | <a href="#" onclick="handleMessageSending('go back', 'frontpage')">back to front page</a></p>
+            <p>${data.text}</p>
+        </div>
+    `;
+}
+
 export function comment(data: KeyMap, time: string) {
     if (!data || data === undefined) {
         return ``;
@@ -82,6 +96,20 @@ export function comment(data: KeyMap, time: string) {
 
     return `
         <div id="${data.id}" class="hn-comment">
+            <p>${data.by} ${time} ago [-]<br/>
+            ${data.text}</p>
+        </div>
+    `;
+}
+
+export function commentIndented(data: KeyMap, time: string) {
+    if (!data || data === undefined) {
+        return ``;
+    }
+
+    return `
+        <div id="${data.id}" class="hn-comment-indented">
+            THIS IS INDENTED!
             <p>${data.by} ${time} ago [-]<br/>
             ${data.text}</p>
         </div>
